@@ -3,9 +3,11 @@
 	import { Card, Button, DropdownShell, Dropdown, TextField, Dialog, Modal } from 'attractions'
 	import { ChevronDownIcon, PlusIcon, MinusIcon, SearchIcon, PlusSquareIcon, ArrowRightIcon } from 'svelte-feather-icons'
 
+	import TimePicker from './lib/TimePicker.svelte'
+
 	let departments = Array.from(new Set(data.map(i => i.subject.replace(/[0-9]/g, ''))))
 
-	let s_deptid = '', s_name = '', s_prof = '', s_time = '';
+	let s_deptid = '', s_name = '', s_prof = '', s_time = [];
 
 	// function hasSubArray(master, sub) {
 	//     return sub.every((i => v => i = master.indexOf(v, i) + 1)(0));
@@ -15,8 +17,7 @@
 		.filter(i => i.subject.replace(/[0-9]/g, '') == s_deptid.toUpperCase())
 		.filter(i => i.engname.toUpperCase().includes(s_name.toUpperCase()))
 		.filter(i => i.teacher.join().includes(s_prof.toUpperCase()))
-		// .filter(i => s_time?hasSubArray(i.time, s_time.toUpperCase().split(' ')):i)
-		// .filter(i => i.time?i.time.join().includes(s_time.toUpperCase()):i)
+		.filter(i => s_time.length?s_time.some(j => i.time.includes(j)):i)
 
 	$: found_count = found.length
 
@@ -51,6 +52,10 @@
 			<Dropdown class="left-0 w-max !rounded-none">
 				<TextField class="" type="search" placeholder="name" bind:value={s_name} />
 				<TextField class="" type="search" placeholder="prof" bind:value={s_prof} />
+
+				<TimePicker bind:TimePickerSelected={s_time} />
+
+
 			</Dropdown>
 		</DropdownShell>
 
