@@ -1,13 +1,13 @@
 <script lang="ts">
 	const days = ['M', 'T', 'W', 'R', 'F', 'S']
-	const times = ['1', '2', '3', '4', 'n', '5', '6', '7', '8', 'a', 'b', 'c']
+	const times = ['1', '2', '3', '4', 'n', '5', '6', '7', '8', '9', 'a', 'b', 'c']
 	const periods = times.flatMap(i => days.map(j => j+i))
 	export let TimePickerSelected = []
 </script>
 
 <main class="p-2">
 	<div class="grid grid-cols-7 text-center">
-		<span></span>
+		<span class="cursor-pointer" on:click={()=>{TimePickerSelected = []}}>&times;</span>
 		{#each days as day}
 		<span class="font-mono">{day}</span>
 		{/each}

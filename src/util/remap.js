@@ -2,9 +2,9 @@
 // const url = 'https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/OPENDATA/open_course_data.json'
 // https.get(url, res => res.pipe(fs.createWriteStream(`./rawdata.json`)))
 
-const fs = require('fs')
+import fs from 'fs'
 
-let data = JSON.parse(decodeURIComponent(fs.readFileSync('./data.json')))
+let data = JSON.parse(decodeURIComponent(fs.readFileSync('../data/rawdata.json')))
 let formatData = data.map(i => ({
     'subject': i.科號.slice(0, 9).replaceAll(' ', ''),
     'class': i.科號.slice(9, 15),
@@ -19,7 +19,8 @@ let formatData = data.map(i => ({
     'desc': i.備註,
     '_d': i.停開註記,
     'venue': i.教室與上課時間.split('\t')[0],
-    'time': (i.教室與上課時間.split('\t')[1])?i.教室與上課時間.split('\t')[1].match(/(..?)/g):'',
+    // 'time': (i.教室與上課時間.split('\t')[1])?i.教室與上課時間.split('\t')[1].match(/(..?)/g):'',
+    'time': i.教室與上課時間.match(/[M||T||W||R||F||S][1-9||a-c||n]/g),
     'teacher': i.授課教師.split('\n').filter(i => i).map(i => i.split('\t')),
     'prereq': i.擋修說明,
     'limits': i.課程限制說明,
@@ -29,4 +30,4 @@ let formatData = data.map(i => ({
     'forwho': i.必選修說明.split('\t').filter(i => i)
 }))
 
-fs.writeFileSync(`./yea.json`, JSON.stringify(formatData, null, 4))
+fs.writeFileSync(`../data/data.json`, JSON.stringify(formatData, null, 4))
