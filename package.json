@@ -1,5 +1,5 @@
 {
-  "name": "nthucoursel",
+  "name": "nthucourselnya",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,13 +12,10 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.0.0",
     "@tsconfig/svelte": "^3.0.0",
-    "attractions": "^3.7.0",
-    "postcss": "^8.4.20",
-    "sass": "^1.57.1",
+    "carbon-components-svelte": "^0.71.0",
+    "carbon-icons-svelte": "^11.4.0",
     "svelte": "^3.54.0",
     "svelte-check": "^2.10.0",
-    "svelte-feather-icons": "^4.0.0",
-    "svelte-preprocess": "^4.10.7",
     "tslib": "^2.4.1",
     "typescript": "^4.9.3",
     "vite": "^4.0.0",
