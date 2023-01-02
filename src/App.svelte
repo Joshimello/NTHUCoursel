@@ -1,11 +1,11 @@
 <script>
 import IbmWatsonLanguageTranslator from 'carbon-icons-svelte/lib/IbmWatsonLanguageTranslator.svelte'
-import { Theme, Search, Button, Modal, SelectableTile, Tag, Popover, Checkbox } from 'carbon-components-svelte'
+import Incomplete from "carbon-icons-svelte/lib/Incomplete.svelte";
+import { Theme, Search, Button, Modal, SelectableTile, Tag, Popover, Checkbox, LocalStorage } from 'carbon-components-svelte'
 import data from './util/nthu-formatdata.ts'
 import CourseFilter from './lib/CourseFilter.svelte'
 
-let theme = 'g100',
-	search = 'cs',
+let search = '',
 	filterName = '',
 	filterTeacher = '',
 	filterID = '',
@@ -24,6 +24,9 @@ let lang_i = 0
 let langs = ['en', 'zh']
 $: lang = langs[lang_i % langs.length]
 
+let theme_i = 0
+let themes = ['g100', 'g80', 'white']
+$: theme = themes[theme_i % themes.length]
 </script>
 
 <main class="max-h-screen flex flex-col">
@@ -32,6 +35,7 @@ $: lang = langs[lang_i % langs.length]
 		<CourseFilter bind:found bind:filterName bind:filterTeacher bind:filterID bind:filterEng bind:filterTimetable />
 		<Button kind="tertiary" on:click={()=>(open = true)}>Selected: </Button>
 		<Button kind="tertiary" on:click={()=>{lang_i++}} tooltipPosition="left" iconDescription="{lang.toUpperCase()}" icon={IbmWatsonLanguageTranslator} />
+		<Button kind="tertiary" on:click={()=>{theme_i++}} tooltipPosition="left" iconDescription="{theme.toUpperCase()}" icon={Incomplete} />
 	</div>
 
 	<div class="overflow-auto" role="group">
@@ -43,16 +47,10 @@ $: lang = langs[lang_i % langs.length]
 			</div>
 			<div>
 				{c.name[lang]}
-				{#each c.teacher as t}
-				<Tag size="sm">{t[lang]}</Tag>
-				{/each}
+				{#each c.teacher as t}<Tag size="sm">{t[lang]}</Tag>{/each}
 			</div>
 			<div>
-				{#if c.time}
-				{#each c.time as t}
-				<Tag size="sm" type="outline">{t}</Tag>
-				{/each}
-				{/if}
+				{#if c.time}{#each c.time as t}<Tag size="sm" type="outline">{t}</Tag>{/each}{/if}
 			</div>
 		</SelectableTile>
 		{/each}
@@ -60,3 +58,12 @@ $: lang = langs[lang_i % langs.length]
 </main>
 
 <Theme bind:theme />
+
+<LocalStorage key="lang" bind:value={lang_i}/>
+<LocalStorage key="theme" bind:value={theme_i}/>
+<LocalStorage key="search" bind:value={search}/>
+<LocalStorage key="filterName" bind:value={filterName}/>
+<LocalStorage key="filterTeacher" bind:value={filterTeacher}/>
+<LocalStorage key="filterID" bind:value={filterID}/>
+<LocalStorage key="filterEng" bind:value={filterEng}/>
+<LocalStorage key="filterTimetable" bind:value={filterTimetable}/>

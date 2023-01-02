@@ -8,10 +8,17 @@ import Language from "carbon-icons-svelte/lib/Language.svelte"
 import { Search, Button, Popover, Checkbox } from 'carbon-components-svelte'
 import TimetableFilter from './TimetableFilter.svelte'
 
-let open = true
+let open = false
+
+function clearAll() {
+	filterName = ''
+	filterTeacher = ''
+	filterID = ''
+	filterEng = false
+	filterTimetable = []
+}
 
 export let found, filterName, filterTeacher, filterID, filterEng, filterTimetable
-	
 </script>
 
 <Button kind="tertiary" icon={Filter} on:click={()=>(open = !open)}>Found: {found.length}</Button>
@@ -26,5 +33,6 @@ export let found, filterName, filterTeacher, filterID, filterEng, filterTimetabl
 			<Checkbox class="m-3" bind:checked={filterEng} /> 
 		</div>
 		<TimetableFilter bind:filterTimetable />
+		<Button class="w-full mt-4" kind="secondary" on:click={()=>{clearAll()}}>Clear All</Button>
 	</Popover>
 </div>

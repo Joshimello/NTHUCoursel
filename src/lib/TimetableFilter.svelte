@@ -10,15 +10,11 @@ export let filterTimetable
 </script>
 
 <main class="p-2">
-	<div class="grid grid-cols-[1.5rem,1.5rem,1.5rem,1.5rem,1.5rem,1.5rem,1.5rem] text-center">
-		<span class="cursor-pointer" on:click={()=>{filterTimetable = []}}>
-			<Close />
-		</span>
+	<div class="grid gap-x-2 grid-cols-[repeat(7,minmax(0,1.5rem))] text-center">
+		<span class="cursor-pointer" on:click={()=>{filterTimetable = []}}><Close /></span>
 		{#each days as day}
 		<span class="font-mono">{day}</span>
 		{/each}
-	</div>
-	<div class="grid grid-cols-[1.5rem,1.5rem,1.5rem,1.5rem,1.5rem,1.5rem,1.5rem] text-center">
 		{#each periods as period, index}
 		{#if !(index % 6)}{times[index/6]}{/if}
 		<Checkbox class="!m-0" bind:group={filterTimetable} value={period} hideLabel />
