@@ -1,9 +1,24 @@
 <script>
 import IbmWatsonLanguageTranslator from 'carbon-icons-svelte/lib/IbmWatsonLanguageTranslator.svelte'
 import Incomplete from "carbon-icons-svelte/lib/Incomplete.svelte";
-import { Theme, Search, Button, Modal, SelectableTile, Tag, Popover, Checkbox, LocalStorage } from 'carbon-components-svelte'
-import data from './util/nthu-formatdata.ts'
+import { 
+	Theme, 
+	Search, 
+	Button, 
+	Modal, 
+	SelectableTile, 
+	Tag, 
+	Popover, 
+	Checkbox, 
+	LocalStorage 
+} from 'carbon-components-svelte'
+
 import CourseFilter from './lib/CourseFilter.svelte'
+import CourseSelected from './lib/CourseSelected.svelte'
+
+import nthuData from './util/nthu-formatdata.ts'
+
+let data = nthuData
 
 let search = '',
 	filterName = '',
@@ -20,6 +35,8 @@ $: found = data
 	.filter(i => filterEng?i.lang == '英':i)
 	.filter(i => filterTimetable.length?filterTimetable.some(j => i.time.includes(j)):i)
 
+$: selected = data.filter(i => i.selected)
+
 let lang_i = 0
 let langs = ['en', 'zh']
 $: lang = langs[lang_i % langs.length]
@@ -27,20 +44,25 @@ $: lang = langs[lang_i % langs.length]
 let theme_i = 0
 let themes = ['g100', 'g80', 'white']
 $: theme = themes[theme_i % themes.length]
+
 </script>
 
 <main class="max-h-screen flex flex-col">
 	<div class="flex">
 		<Search placeholder="Department ID..." bind:value={search} />
+		
 		<CourseFilter bind:found bind:filterName bind:filterTeacher bind:filterID bind:filterEng bind:filterTimetable />
-		<Button kind="tertiary" on:click={()=>(open = true)}>Selected: </Button>
+		
+		<CourseSelected bind:selected bind:lang />
+		
 		<Button kind="tertiary" on:click={()=>{lang_i++}} tooltipPosition="left" iconDescription="{lang.toUpperCase()}" icon={IbmWatsonLanguageTranslator} />
+		
 		<Button kind="tertiary" on:click={()=>{theme_i++}} tooltipPosition="left" iconDescription="{theme.toUpperCase()}" icon={Incomplete} />
 	</div>
 
 	<div class="overflow-auto" role="group">
-		{#each found as c}
-		<SelectableTile bind:selected={c.selected}>
+		{#each found as c, index}
+		<SelectableTile bind:selected={data[data.indexOf(c)].selected}>
 			<div>
 				{c.subject}
 				{c.class}
