@@ -6,11 +6,11 @@ TLDR nthu couse selection page is shit
 
 ## Used
 vite  
-svelte  
-windicss
-carbon icons
-carbon components
-free nthu data that iS PROTECTED BY CORS???? WHY???
+svelte   
+windicss  
+carbon icons  
+carbon components  
+free nthu data that iS PROTECTED BY CORS???? WHY???  
 
 ## Help
 do whatever go crazy  
