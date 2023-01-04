@@ -18,6 +18,9 @@ comment issue pr
 ill accept it anyways
 
 ## Todo i guess
+- [ ] able to swtich datasets
+- [ ] switch to fusejs
+- [ ] detach data and fetch
 - [ ] display more info
 - [ ] saveable data
 - [ ] lanuguage
