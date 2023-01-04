@@ -16,7 +16,7 @@ import {
 	Tile
 } from 'carbon-components-svelte'
 
-let open = true, tabopen = 0
+let open = false, tabopen = 0
 
 $: totalCredit = selected.map(i => parseInt(i.credit)).reduce((a, b) => a + b, 0)
 

@@ -1,4 +1,4 @@
-import data from '../data/nthu-data.json'
+import data from '../data/nthu11122.json'
 
 let format = data.map(i => ({
     'selected': false,
