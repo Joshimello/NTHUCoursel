@@ -29,3 +29,4 @@ ill accept it anyways
 - [ ] reviews??
 - [ ] sorting??
 - [ ] for other unis???
+- [ ] intergrate with actual page??? (good luck imjustchew)
