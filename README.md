@@ -2,7 +2,10 @@
 course selection preview
 
 ## Why
-TLDR nthu couse selection page is shit
+TLDR nthu couse selection page is shit  
+and i want a sexy looking course selection page  
+i think i can work on this on the next few years...  
+if i dont fail heh...  
 
 ## Used
 vite  
@@ -29,3 +32,4 @@ ill accept it anyways
 - [ ] reviews??
 - [ ] sorting??
 - [ ] for other unis???
+- [ ] intergrate with actual page??? (good luck imjustchew)
