@@ -1,9 +1,11 @@
-import data from '../data/nthu11122.json'
+import data from 'https://cors-anywhere.herokuapp.com/https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/OPENDATA/open_course_data.json'
 
 let format = data.map(i => ({
     'selected': false,
-    'subject': i.科號.slice(0, 9).replaceAll(' ', ''),
-    'class': i.科號.slice(9, 15),
+    'id': {
+        'department': i.科號.slice(0, 9).replaceAll(' ', ''),
+        'class': i.科號.slice(9, 15)
+    },
     'name': {
         'en': i.課程英文名稱,
         'zh': i.課程中文名稱,
