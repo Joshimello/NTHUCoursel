@@ -23,7 +23,7 @@ export let found, filterName, filterTeacher, filterID, filterEng, filterTimetabl
 
 <Button kind="tertiary" icon={Filter} on:click={()=>(open = !open)}>Found: {found.length}</Button>
 <div class="relative">
-	<Popover bind:open align="bottom-right">
+	<Popover bind:open align="bottom">
 		<Search size="lg" placeholder="Course Name..." icon={TextSmallCaps} bind:value={filterName} />
 		<Search size="lg" placeholder="Teacher Name..." icon={User} bind:value={filterTeacher} />
 		<Search size="lg" placeholder="Course ID..." icon={Asterisk} bind:value={filterID} />

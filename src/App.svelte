@@ -1,25 +1,24 @@
 <script>
+// Icons
 import IbmWatsonLanguageTranslator from 'carbon-icons-svelte/lib/IbmWatsonLanguageTranslator.svelte'
 import Incomplete from "carbon-icons-svelte/lib/Incomplete.svelte";
-import { 
-	Theme, 
-	Search, 
-	Button, 
-	Modal, 
-	SelectableTile, 
-	Tag, 
-	Popover, 
-	Checkbox, 
-	LocalStorage 
+
+// Components
+import { Theme, Search, Button, Modal, SelectableTile, Tag, Popover, Checkbox, LocalStorage 
 } from 'carbon-components-svelte'
 
+// Custom Components
 import CourseFilter from './lib/CourseFilter.svelte'
 import CourseSelected from './lib/CourseSelected.svelte'
 
-import nthuData from './util/nthu-formatdata.ts'
+// Utilities
+import Fuse from 'fuse.js'
+import GetData from './util/GetDataNthu.ts'
 
-let data = nthuData
+// Data Init
+let data = GetData('https://raw.githubusercontent.com/Joshimello/NTHUCoursel/nya/course_data/nthu11122.json')
 
+// Filter Init
 let search = '',
 	filterName = '',
 	filterTeacher = '',
@@ -27,11 +26,25 @@ let search = '',
 	filterEng = false,
 	filterTimetable = []
 
+// const fuse = new Fuse(data, {
+// 	useExtendedSearch: true,
+// 	keys: ['id.department', 'id.class', 'name.en', 'name.zh', 'teacher.en', 'teacher.zh', 'lang']
+// })
+
+// $: found = fuse.search({
+// 	$and: [
+// 		{ 'id.department': `${search}$` },
+// 		// { 'id.class': `${filterID}` },
+// 		{ 'teacher.en': `${filterTeacher}` },
+// 	]
+// }).map(i => i.item)
+
+// console.log(found)
 $: found = data
-	.filter(i => i.subject.replace(/[0-9]/g, '') == search.toUpperCase())
+	.filter(i => i.id.department.replace(/[0-9]/g, '') == search.toUpperCase())
 	.filter(i => (i.name.en.toUpperCase()+i.name.zh).includes(filterName.toUpperCase()))
 	.filter(i => JSON.stringify(i.teacher).replace(/[\[\]\{\}",:"en""zh"]/g, '').includes(filterTeacher.toUpperCase()))
-	.filter(i => (i.subject+i.class).includes(filterID.toUpperCase()))
+	.filter(i => (i.id.department+i.id.class).includes(filterID.toUpperCase()))
 	.filter(i => filterEng?i.lang == '英':i)
 	.filter(i => filterTimetable.length?filterTimetable.some(j => i.time.includes(j)):i)
 
@@ -64,8 +77,8 @@ $: theme = themes[theme_i % themes.length]
 		{#each found as c, index}
 		<SelectableTile bind:selected={data[data.indexOf(c)].selected}>
 			<div>
-				{c.subject}
-				{c.class}
+				{c.id.department}
+				{c.id.class}
 			</div>
 			<div>
 				{c.name[lang]}
