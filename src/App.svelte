@@ -2,22 +2,17 @@
 // Icons
 import IbmWatsonLanguageTranslator from 'carbon-icons-svelte/lib/IbmWatsonLanguageTranslator.svelte'
 import Incomplete from "carbon-icons-svelte/lib/Incomplete.svelte";
-
 // Components
 import { Theme, Search, Button, Modal, SelectableTile, Tag, Popover, Checkbox, LocalStorage 
 } from 'carbon-components-svelte'
-
 // Custom Components
 import CourseFilter from './lib/CourseFilter.svelte'
 import CourseSelected from './lib/CourseSelected.svelte'
-
 // Utilities
 import Fuse from 'fuse.js'
 import GetData from './util/GetDataNthu.ts'
-
 // Data Init
-let data = GetData('https://raw.githubusercontent.com/Joshimello/NTHUCoursel/nya/course_data/nthu11122.json')
-
+let data = GetData('https://raw.githubusercontent.com/Joshimello/NTHUCoursel/nya/course_data/nthu11123.json')
 // Filter Init
 let search = '',
 	filterName = '',
@@ -25,12 +20,10 @@ let search = '',
 	filterID = '',
 	filterEng = false,
 	filterTimetable = []
-
 // const fuse = new Fuse(data, {
 // 	useExtendedSearch: true,
 // 	keys: ['id.department', 'id.class', 'name.en', 'name.zh', 'teacher.en', 'teacher.zh', 'lang']
 // })
-
 // $: found = fuse.search({
 // 	$and: [
 // 		{ 'id.department': `${search}$` },
@@ -38,7 +31,6 @@ let search = '',
 // 		{ 'teacher.en': `${filterTeacher}` },
 // 	]
 // }).map(i => i.item)
-
 // console.log(found)
 $: found = data
 	.filter(i => i.id.department.replace(/[0-9]/g, '') == search.toUpperCase())
@@ -47,17 +39,13 @@ $: found = data
 	.filter(i => (i.id.department+i.id.class).includes(filterID.toUpperCase()))
 	.filter(i => filterEng?i.lang == '英':i)
 	.filter(i => filterTimetable.length?filterTimetable.some(j => i.time.includes(j)):i)
-
 $: selected = data.filter(i => i.selected)
-
 let lang_i = 0
 let langs = ['en', 'zh']
 $: lang = langs[lang_i % langs.length]
-
 let theme_i = 0
 let themes = ['g100', 'g80', 'white']
 $: theme = themes[theme_i % themes.length]
-
 </script>
 
 <main class="max-h-screen flex flex-col">
